@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<pages:BaseContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:pages="clr-namespace:Robo.Mvvm.Forms.Pages;assembly=Robo.Mvvm.Forms"
+    xmlns:vm="clr-namespace:MultiTenantSample.Core.ViewModels;assembly=MultiTenantSample.Core"
+    x:TypeArguments="vm:HomeViewModel"
+    x:Class="MultiTenantSample.Pages.HomePage"
+    Title="{Binding TenantId}">
+    <pages:BaseContentPage.ToolbarItems>
+        <ToolbarItem Text="Logout" Command="{Binding LogoutCommand}" />
+    </pages:BaseContentPage.ToolbarItems>
+    <pages:BaseContentPage.Content>
+        
+        <StackLayout>
+            
+            <Button Text="Add Item" Command="{Binding AddItemCommand}" />
+            
+            <BoxView BackgroundColor="Gray" HeightRequest="1" HorizontalOptions="FillAndExpand" />
+            
+            <ListView ItemsSource="{Binding Items}"
+                               SeparatorVisibility="None" 
+                               HasUnevenRows="true">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.ContextActions>
+                                <MenuItem Clicked="Handle_Context_Clicked" CommandParameter="{Binding .}" Text="Delete" IsDestructive="True" />
+                            </ViewCell.ContextActions>
+                            <StackLayout Margin="0">
+                                
+                                <Grid RowSpacing="0" Margin="8,10,8,5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="100" />
+                                        <ColumnDefinition Width="*" />   
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <Label Grid.Row="0" Grid.Column="0" Text="Item Name:" FontAttributes="Bold" />
+                                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding Name}" LineBreakMode="HeadTruncation" MaxLines="1" />
+                                    
+                                    <Label Grid.Row="1" Grid.Column="0" Text="Created By:" FontAttributes="Bold" />
+                                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding CreatedBy}" />
+                                    
+                                    <Label Grid.Row="2" Grid.Column="0" Text="Created On:" FontAttributes="Bold" />
+                                    <Label Grid.Row="2" Grid.Column="1" Text="{Binding CreatedDateTime}" />
+                                </Grid>
+                 
+                                <BoxView BackgroundColor="Gray" HeightRequest="1" HorizontalOptions="FillAndExpand" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            
+            <StackLayout VerticalOptions="End" HorizontalOptions="Center" Orientation="Horizontal" Margin="0,0,0,25">
+                <Label Text="Logged In As:" />
+                <Label Text="{Binding LoggedInAs}" />
+            </StackLayout>
+            
+        </StackLayout>
+        
+    </pages:BaseContentPage.Content>
+</pages:BaseContentPage>
